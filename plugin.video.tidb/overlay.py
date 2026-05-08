@@ -31,6 +31,8 @@ ACTION_BACK = 92
 BUTTON_ID = 3001
 
 _POLL_INTERVAL = 0.5
+_START_POLL_INTERVAL = 0.25
+_CLOCK_ADVANCE_EPSILON = 0.05
 _DISPLAY_DURATION = 5.0
 
 
@@ -203,6 +205,8 @@ def show_skip_overlay(callback: Optional[Callable[[], None]] = None, intro_end: 
     mon = monitor if monitor is not None else xbmc.Monitor()
     if mon.abortRequested():
         return False
+    if not _wait_for_playback_clock(player, mon, intro_end):
+        return False
     try:
         wnd = SkipOverlay(
             'overlay.xml',
@@ -223,3 +227,35 @@ def show_skip_overlay(callback: Optional[Callable[[], None]] = None, intro_end: 
     except Exception as e:
         xbmc.log('[TheIntroDB] Overlay error: {}'.format(e), xbmc.LOGERROR)
         return False
+
+
+def _wait_for_playback_clock(player: Optional[xbmc.Player], monitor: xbmc.Monitor,
+                             intro_end: Optional[float]) -> bool:
+    """Wait until Kodi's playback clock is advancing before opening the overlay."""
+    if player is None:
+        return True
+
+    previous_time: Optional[float] = None
+
+    while not monitor.abortRequested():
+        try:
+            playback_started = getattr(player, 'playback_started', True)
+            if not playback_started:
+                return False
+
+            if player.isPlaying():
+                current_time = player.getTime()
+                if intro_end is not None and current_time >= intro_end:
+                    return False
+                if previous_time is not None and current_time > previous_time + _CLOCK_ADVANCE_EPSILON:
+                    return True
+                previous_time = current_time
+            else:
+                previous_time = None
+        except Exception:
+            previous_time = None
+
+        if monitor.waitForAbort(_START_POLL_INTERVAL):
+            return False
+
+    return False
