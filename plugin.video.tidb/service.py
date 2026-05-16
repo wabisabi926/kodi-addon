@@ -9,10 +9,12 @@ import skipper
 import overlay as overlay_mod
 import submit_overlay
 import introdb
+import aptabase_analytics
 
 ADDON = xbmcaddon.Addon()
 _ADDON_ID = ADDON.getAddonInfo('id')
 ADDON_NAME = ADDON.getAddonInfo('name')
+REPORTER = None
 
 # String IDs for localization
 STR_SKIP_INTRO = 32001
@@ -185,6 +187,8 @@ def _handle_segment(segment: Dict[str, Any], segment_idx: int, player: TIDBPlaye
     # Auto-skip intro segments only
     if auto_skip and segment_type == 'intro':
         skipper.execute_skip(player, api_start, api_end, filename, segment_type)
+        if REPORTER:
+            REPORTER.track('segment_auto_skipped', {'segment_type': segment_type})
         _debug_osd('Auto-skipped {}'.format(segment_name))
         xbmc.log('[TheIntroDB] Auto-skipped {} to {:.1f}s'.format(segment_name, api_end), xbmc.LOGINFO)
         return None
@@ -197,6 +201,8 @@ def _handle_segment(segment: Dict[str, Any], segment_idx: int, player: TIDBPlaye
     if pressed:
         xbmc.log('[TheIntroDB] User pressed Skip {}'.format(segment_name), xbmc.LOGINFO)
         skipper.execute_skip(player, api_start, api_end, filename, segment_type)
+        if REPORTER:
+            REPORTER.track('segment_skipped', {'segment_type': segment_type})
         _debug_osd('Skipped {} to {:.1f}s'.format(segment_name, api_end))
     else:
         xbmc.log('[TheIntroDB] User did NOT skip {}'.format(segment_name), xbmc.LOGINFO)
@@ -221,6 +227,8 @@ def _handle_next_episode(player: TIDBPlayer, monitor: xbmc.Monitor, session: Pla
     )
     if pressed:
         xbmc.log('[TheIntroDB] User pressed Next Episode', xbmc.LOGINFO)
+        if REPORTER:
+            REPORTER.track('next_episode_pressed', {'segment_type': segment_type})
         was_opened = player.play_next_episode(session.next_episode_info)
         if was_opened:
             _debug_osd('Next Episode')
@@ -385,8 +393,12 @@ def _run_service() -> None:
     monitor = TIDBMonitor()
     player = TIDBPlayer()
     session = PlaybackSession()
+    global REPORTER
+    REPORTER = aptabase_analytics.AptabaseReporter()
 
     xbmc.log('[TheIntroDB] Service started', xbmc.LOGINFO)
+    if REPORTER:
+        REPORTER.track('service_started')
 
     while not monitor.abortRequested():
         if monitor.waitForAbort(1.0):
@@ -471,6 +483,11 @@ def _run_service() -> None:
             session.all_segments = None
 
     xbmc.log('[TheIntroDB] Service stopped', xbmc.LOGINFO)
+    if REPORTER:
+        REPORTER.track('service_stopped')
+        REPORTER.flush(1.0)
+        REPORTER.close(1.0)
+        REPORTER = None
 
 
 # ── Segment button timing ────────────────────────────────────────────────
