@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2026 TheIntroDB
+#
 # skip intro button windowxml — background thread closes when playhead passes intro end
 import os
 import threading

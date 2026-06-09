@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2026 TheIntroDB
+#
 # submit_overlay.py — overlay for marking intro start/end timestamps during playback
 # Reuses the same overlay.xml skin pill as the skip button.
 import threading

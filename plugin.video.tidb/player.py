@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2026 TheIntroDB
+#
 # subclasses xbmc.player — path, whether we treat this as tv-ish content, scrape ids for api
 import json
 import re

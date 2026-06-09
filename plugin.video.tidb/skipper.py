@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2026 TheIntroDB
+#
 # seek to intro end + offset from settings
 import xbmc
 import xbmcaddon

@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2026 TheIntroDB
+#
 # kodi service entry: poll playback, query theintrodb, show skip ui or auto-seek
 import xbmc
 import xbmcaddon
