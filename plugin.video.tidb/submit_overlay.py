@@ -14,7 +14,17 @@ from typing import Optional
 
 ADDON = xbmcaddon.Addon()
 ADDON_PATH: str = ADDON.getAddonInfo('path')
-_OVERLAY_RES = '1080i'
+
+
+def _detect_res() -> str:
+    try:
+        height = xbmc.getScreenHeight()
+        return '1080i' if height >= 1080 else '720p'
+    except Exception:
+        return '1080i'
+
+
+_OVERLAY_RES = _detect_res()
 _BG_IMAGE_SHADOW = 3003
 _BG_IMAGE_FILL = 3004
 
