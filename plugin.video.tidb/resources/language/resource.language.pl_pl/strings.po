@@ -53,80 +53,80 @@ msgstr "Kolejny odcinek"
 
 msgctxt "#32020"
 msgid "Mark Intro Start"
-msgstr ""
+msgstr "Oznacz początek czołówki"
 
 msgctxt "#32021"
 msgid "Mark Intro End"
-msgstr ""
+msgstr "Oznacz koniec czołówki"
 
 msgctxt "#32022"
 msgid "Submitted!"
-msgstr ""
+msgstr "Wysłano!"
 
 msgctxt "#32023"
 msgid "Submission failed"
-msgstr ""
+msgstr "Wysłanie nie powiodło się"
 
 msgctxt "#32024"
 msgid "Offer to submit intros on pause (needs API key)"
-msgstr ""
+msgstr "Proponuj wysyłanie czołówek po pauzie (wymaga klucza API)"
 
 msgctxt "#32025"
 msgid "General"
-msgstr ""
+msgstr "Ogólne"
 
 msgctxt "#32026"
 msgid "Segment Types"
-msgstr ""
+msgstr "Typy segmentów"
 
 msgctxt "#32027"
 msgid "TheIntroDB"
-msgstr ""
+msgstr "TheIntroDB"
 
 msgctxt "#32028"
 msgid "Submissions"
-msgstr ""
+msgstr "Przesyłanie"
 
 msgctxt "#32029"
 msgid "Privacy"
-msgstr ""
+msgstr "Prywatność"
 
 msgctxt "#32030"
 msgid "Debug"
-msgstr ""
+msgstr "Debugowanie"
 
 msgctxt "#32031"
 msgid "Enable lookups"
-msgstr ""
+msgstr "Włącz wyszukiwanie"
 
 msgctxt "#32032"
 msgid "Optional TheIntroDB API key"
-msgstr ""
+msgstr "Opcjonalny klucz API TheIntroDB"
 
 msgctxt "#32033"
 msgid "Anonymous usage reporting"
-msgstr ""
+msgstr "Anonimowe raportowanie użycia"
 
 msgctxt "#32034"
 msgid "Verbose logging (kodi.log)"
-msgstr ""
+msgstr "Szczegółowe logowanie (kodi.log)"
 
 msgctxt "#32035"
 msgid "On-screen debug notifications"
-msgstr ""
+msgstr "Powiadomienia debugowania na ekranie"
 
 msgctxt "#32036"
 msgid "Auto-skip intro segments"
-msgstr ""
+msgstr "Automatycznie pomijaj czołówki"
 
 msgctxt "#32037"
 msgid "Auto-skip recap segments"
-msgstr ""
+msgstr "Automatycznie pomijaj podsumowania"
 
 msgctxt "#32038"
 msgid "Auto-skip credits segments"
-msgstr ""
+msgstr "Automatycznie pomijaj napisy końcowe"
 
 msgctxt "#32039"
 msgid "Auto-skip preview segments"
-msgstr ""
+msgstr "Automatycznie pomijaj zapowiedzi"
