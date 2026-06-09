@@ -90,7 +90,7 @@ class TIDBPlayer(xbmc.Player):
             return False
 
     def _detect_tv_content(self) -> bool:
-        # episodes, sxxeyy in path — rough filter for streamers
+        # episodes, sxxeyy in path, or long video — rough filter for streamers
         if not self._is_video:
             return False
 
@@ -101,8 +101,6 @@ class TIDBPlayer(xbmc.Player):
             media_type = tag.getMediaType()
             if media_type == 'episode':
                 return True
-            if media_type == 'movie':
-                return False
         except Exception:
             pass
 
