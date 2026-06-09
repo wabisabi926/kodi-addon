@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
+  pull_request:
     types: [ opened, edited, synchronize ]
     branches:
       - main
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONIOENCODING: utf-8
-      PYTHONPATH: ${{ github.workspace }}/plugin.video.tidb/resources/lib:${{ github.workspace }}/tests
+      PYTHONPATH: ${{ github.workspace }}/plugin.video.tidb:${{ github.workspace }}/tests
     steps:
     - name: Check out ${{ github.sha }} from repository ${{ github.repository }}
       uses: actions/checkout@v4
@@ -31,10 +31,10 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install flake8 pylint coverage
     - name: Run flake8
-      run: python -m flake8 plugin.video.tidb/resources/lib/ tests/ || true
+      run: python -m flake8 plugin.video.tidb/ tests/ || true
       if: always()
     - name: Run pylint
-      run: python -m pylint plugin.video.tidb/resources/lib/ tests/ || true
+      run: python -m pylint plugin.video.tidb/ tests/ || true
       if: always()
     - name: Run unit tests
       run: |
