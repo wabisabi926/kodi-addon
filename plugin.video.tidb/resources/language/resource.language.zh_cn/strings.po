@@ -101,7 +101,7 @@ msgstr "启用数据库查询"
 
 msgctxt "#32032"
 msgid "Optional TheIntroDB API key"
-msgstr "可选 TheIntroDB API 密钥"
+msgstr "选填 TheIntroDB API 密钥"
 
 msgctxt "#32033"
 msgid "Anonymous usage reporting"
