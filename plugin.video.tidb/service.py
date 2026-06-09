@@ -494,7 +494,7 @@ def _run_service() -> None:
 # ── Segment button timing ────────────────────────────────────────────────
 
 def _should_show_segment_button(processed_segments: Dict[str, Dict[str, Any]], segment_key: str, current_time: float,
-                                segment_start: float, segment_end: float, margin: float = 0.25) -> bool:
+                                segment_start: float, segment_end: float, margin: float = 0.5) -> bool:
     """
     Show the skip button once per segment entry.
 

@@ -21,6 +21,7 @@ API_BASE = 'https://api.theintrodb.org/v3'
 MIN_REQUEST_GAP = 0.4  # small gap between requests
 _last_request_time = 0.0
 _rate_limit_until = 0.0
+_rate_limit_lock = threading.Lock()
 
 
 def _debug_logging() -> bool:
@@ -47,15 +48,16 @@ def _is_enabled() -> bool:
 
 def _wait_rate_limit() -> bool:
     global _last_request_time
-    now = time.time()
-    if now < _rate_limit_until:
-        xbmc.log('[TheIntroDB] TheIntroDB rate-limited until {:.0f}'.format(
-            _rate_limit_until), xbmc.LOGINFO)
-        return False
-    gap = now - _last_request_time
-    if gap < MIN_REQUEST_GAP:
-        time.sleep(MIN_REQUEST_GAP - gap)
-    _last_request_time = time.time()
+    with _rate_limit_lock:
+        now = time.time()
+        if now < _rate_limit_until:
+            xbmc.log('[TheIntroDB] TheIntroDB rate-limited until {:.0f}'.format(
+                _rate_limit_until), xbmc.LOGINFO)
+            return False
+        gap = now - _last_request_time
+        if gap < MIN_REQUEST_GAP:
+            time.sleep(MIN_REQUEST_GAP - gap)
+        _last_request_time = time.time()
     return True
 
 
@@ -84,7 +86,8 @@ def _do_request(url: str, api_key: str) -> Optional[Dict[str, Any]]:
                     except ValueError:
                         pass
                     break
-            _rate_limit_until = time.time() + retry
+            with _rate_limit_lock:
+                _rate_limit_until = time.time() + retry
             xbmc.log('[TheIntroDB] TheIntroDB 429 rate limited for {}s'.format(retry),
                      xbmc.LOGWARNING)
         elif e.code == 404:
@@ -409,7 +412,8 @@ def submit_segment(tmdb_id: Optional[Union[str, int]] = None, imdb_id: Optional[
                     except ValueError:
                         pass
                     break
-            _rate_limit_until = time.time() + retry
+            with _rate_limit_lock:
+                _rate_limit_until = time.time() + retry
         xbmc.log('[TheIntroDB] Submit failed: {}'.format(err_msg), xbmc.LOGWARNING)
         return False, err_msg
     except URLError as e:
