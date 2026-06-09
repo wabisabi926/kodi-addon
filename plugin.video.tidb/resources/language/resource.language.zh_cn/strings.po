@@ -69,7 +69,7 @@ msgstr "提交失败"
 
 msgctxt "#32024"
 msgid "Offer to submit intros on pause (needs API key)"
-msgstr "暂停时提示提交片头信息（需要API密钥）"
+msgstr "暂停时提示提交片头信息（需要 API 密钥）"
 
 msgctxt "#32025"
 msgid "General"
