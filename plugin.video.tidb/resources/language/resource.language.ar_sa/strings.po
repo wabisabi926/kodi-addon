@@ -135,3 +135,11 @@ msgstr "تخطي مقاطع الإعلان الترويجي تلقائياً"
 msgctxt "#32040"
 msgid "Hide skip button after (seconds, 0 = keep until segment ends)"
 msgstr "إخفاء زر التخطي بعد (ثوانٍ، 0 = إبقاؤه حتى نهاية المقطع)"
+
+msgctxt "#32041"
+msgid "Test API key"
+msgstr "اختبار مفتاح API"
+
+msgctxt "#32042"
+msgid "Enable, then press OK to close settings and see the result"
+msgstr "فعّل ثم اضغط موافق لإغلاق الإعدادات ورؤية النتيجة"

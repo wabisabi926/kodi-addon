@@ -39,6 +39,40 @@ def _get_api_key() -> str:
     return (ADDON.getSetting('introdb_api_key') or '').strip()
 
 
+def test_api_key() -> Tuple[bool, str]:
+    """Validate the configured API key against the TheIntroDB API.
+
+    Returns (success, message) tuple.
+    """
+    api_key = _get_api_key()
+    if not api_key:
+        return False, 'No API key configured.'
+
+    url = '{}/media?tmdb_id=1'.format(API_BASE)
+    req = Request(url)
+    req.add_header('Accept', 'application/json')
+    req.add_header('User-Agent', 'TheIntroDB Kodi Addon/1.0')
+    req.add_header('Authorization', 'Bearer {}'.format(api_key))
+
+    try:
+        urlopen(req, timeout=8)
+        return True, 'API key is valid.'
+    except HTTPError as e:
+        if e.code == 401:
+            return False, 'Invalid API key (401 Unauthorized).'
+        if e.code == 403:
+            return False, 'API key rejected (403 Forbidden).'
+        if e.code == 429:
+            return False, 'Rate limited (429). Try again later.'
+        if e.code >= 500:
+            return False, 'API server error (HTTP {}). Try again later.'.format(e.code)
+        return True, 'API key is valid.'
+    except URLError as e:
+        return False, 'API unreachable: {}'.format(e.reason)
+    except Exception as e:
+        return False, 'Request failed: {}'.format(e)
+
+
 def _is_enabled() -> bool:
     try:
         return xbmcaddon.Addon(_ADDON_ID).getSetting('introdb_enabled') == 'true'

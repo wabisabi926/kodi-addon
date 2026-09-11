@@ -130,3 +130,11 @@ msgstr "自动跳过片尾片段"
 msgctxt "#32039"
 msgid "Auto-skip preview segments"
 msgstr "自动跳过预告片段"
+
+msgctxt "#32041"
+msgid "Test API key"
+msgstr "测试 API 密钥"
+
+msgctxt "#32042"
+msgid "Enable, then press OK to close settings and see the result"
+msgstr "启用后按确定关闭设置并查看结果"

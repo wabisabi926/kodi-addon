@@ -54,6 +54,14 @@ def _debug_logging() -> bool:
     return ADDON.getSetting('debug_logging') == 'true'
 
 
+def _run_api_key_test() -> None:
+    """Validate the configured API key and present the result."""
+    xbmc.log('[TheIntroDB] Running API key test from settings', xbmc.LOGINFO)
+    success, msg = introdb.test_api_key()
+    xbmc.log('[TheIntroDB] API key test result: {}'.format(msg), xbmc.LOGINFO)
+    xbmcgui.Dialog().ok('TheIntroDB API', msg)
+
+
 # ── Playback session state ────────────────────────────────────────────────
 
 class PlaybackSession:
@@ -404,6 +412,14 @@ def _run_service() -> None:
     while not monitor.abortRequested():
         if monitor.waitForAbort(1.0):
             break
+
+        # ── API key test button (settings) ──
+        if _fresh_bool('test_api_key_now'):
+            try:
+                xbmcaddon.Addon(_ADDON_ID).setSetting('test_api_key_now', 'false')
+            except Exception:
+                pass
+            _run_api_key_test()
 
         if not player.playback_started:
             session.reset()

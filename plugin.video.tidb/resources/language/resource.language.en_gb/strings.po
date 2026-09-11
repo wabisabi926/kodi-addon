@@ -134,3 +134,11 @@ msgstr ""
 msgctxt "#32040"
 msgid "Hide skip button after (seconds, 0 = keep until segment ends)"
 msgstr ""
+
+msgctxt "#32041"
+msgid "Test API key"
+msgstr ""
+
+msgctxt "#32042"
+msgid "Enable, then press OK to close settings and see the result"
+msgstr ""
